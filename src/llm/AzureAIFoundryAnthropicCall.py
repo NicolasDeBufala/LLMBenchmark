@@ -81,12 +81,12 @@ class AzureAIAnthropicFoundryCall(LLMCallBaseClass):
         self.entryFileFormatAccepted = [True, False, False, False]
         
         # Get endpoint and key from parameters or environment
-        self.endpoint = "https://ai-rd-sweden.services.ai.azure.com/anthropic/"
+        self.endpoint = os.getenv("AZURE_FOUNDRY_ANTHROPIC_ENDPOINT", endpoint)
         self.api_key = api_key or os.getenv("AZURE_FOUNDRY_API_KEY", "")
         print(f"Using Azure AI Foundry endpoint: {self.endpoint}")
         if not self.endpoint or not self.api_key:
             print("⚠ Warning: Azure AI Foundry endpoint or API key not configured")
-            print("  Set AZURE_FOUNDRY_ENDPOINT and AZURE_FOUNDRY_API_KEY environment variables")
+            print("  Set AZURE_FOUNDRY_ANTHROPIC_ENDPOINT and AZURE_FOUNDRY_API_KEY environment variables")
         
         # Initialize Azure OpenAI client (timeout handled by thread wrapper)
         self.client = AzureOpenAI(
